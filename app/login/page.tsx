@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./login.module.css";
 import { useRouter } from "next/navigation";
-import { Button } from "@headlessui/react";
+import { Button, Input } from "@headlessui/react";
 import classNames from "classnames";
 
 export default function Login() {
@@ -24,10 +24,19 @@ export default function Login() {
         <p className="text-gray-500">Welcome to the app!</p>
       </div>
       <div className="w-full flex flex-col gap-4 mt-6">
-        <input className={styles.input} placeholder="Company ID" />
-        <input className={styles.input} placeholder="User Name" />
-        <input
+        <Input
+          aria-label="company-id"
           className={styles.input}
+          placeholder="Company ID"
+        />
+        <Input
+          className={styles.input}
+          aria-label="name"
+          placeholder="User Name"
+        />
+        <Input
+          className={styles.input}
+          aria-label="password"
           type="password"
           placeholder="Password"
         />
