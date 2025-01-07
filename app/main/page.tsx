@@ -1,15 +1,21 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Main() {
+  const router = useRouter();
+
   return (
     <main className="w-full h-full flex flex-col">
-      <header className="flex items-center justify-between p-4">
+      <header className="flex items-center justify-between px-2.5 py-2">
         <Image
           src="/logo-merged.svg"
           alt="Next.js logo"
-          width={126}
+          width={144}
           height={24}
           priority
+          className="px-2"
         />
         <button className="rounded-full p-2 hover:bg-gray-100">
           <Image
@@ -22,7 +28,10 @@ export default function Main() {
         </button>
       </header>
       <div className="flex flex-col flex-1 px-5 py-6">
-        <button className="text-left flex items-center gap-2 p-4 text-base font-semibold leading-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+        <button
+          className="text-left flex items-center gap-2 p-4 text-base font-semibold leading-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+          onClick={() => router.push("/main/detail?type=edit")}
+        >
           <Image
             src="/icon_make_new_document.svg"
             alt="Search"
