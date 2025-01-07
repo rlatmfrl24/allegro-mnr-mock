@@ -16,15 +16,15 @@ export default function Landing() {
       <Image
         src="/logo-mnr.svg"
         alt="Next.js logo"
-        width={180}
-        height={38}
+        width={160}
+        height={134}
         priority
       />
       <Image
         src="/logo-text.svg"
         alt="Next.js logo"
-        width={180}
-        height={38}
+        width={155}
+        height={20}
         priority
       />
     </main>
