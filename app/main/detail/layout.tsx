@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import styles from "../main.module.css";
 import { Button } from "@headlessui/react";
+import classNames from "classnames";
 
 export default function DetailLayout() {
   const query = useSearchParams();
@@ -47,12 +48,41 @@ export default function DetailLayout() {
     switch (type) {
       case "edit":
         return (
-          <footer className="flex px-5 py-4 border-t border-gray-200">
+          <footer className={classNames(styles.detail, styles.footer)}>
             <Button className={styles.bigButton}>Confirm</Button>
           </footer>
         );
       case "save":
+        return (
+          <footer className={classNames(styles.detail, styles.footer)}>
+            <Button className={styles.iconButton}>
+              <Image
+                src="/icon_delete.svg"
+                alt="Edit"
+                width={24}
+                height={24}
+                priority
+              />
+            </Button>
+            <Button className={styles.outlinedButton}>Edit</Button>
+            <Button className={styles.bigButton}>Send</Button>
+          </footer>
+        );
       case "sent":
+        return (
+          <footer className={classNames(styles.detail, styles.footer)}>
+            <Button className={styles.iconButton}>
+              <Image
+                src="/icon_delete.svg"
+                alt="Edit"
+                width={24}
+                height={24}
+                priority
+              />
+            </Button>
+            <Button className={styles.bigButton}>Closed</Button>
+          </footer>
+        );
       default:
         return <></>;
     }

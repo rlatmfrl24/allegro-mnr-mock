@@ -1,11 +1,19 @@
 .iconButton {
-  @apply rounded-full p-2 hover:bg-gray-100;
+  @apply rounded-full p-2 hover:bg-gray-100 w-12 h-12 flex items-center justify-center;
 }
 
 .bigButton {
-  @apply bg-blue-500 hover:bg-blue-600 rounded-full border-2 border-blue-300 w-full text-white h-12;
+  @apply bg-blue-500 hover:bg-blue-600 rounded-full border-2 border-blue-300 w-full text-white h-12 font-medium flex-1;
 }
 
-.bigButton.disabled {
-  @apply bg-gray-300 text-gray-500;
+.bigButton:disabled {
+  @apply bg-gray-300 text-gray-500 border-gray-300;
+}
+
+.detail.footer {
+  @apply flex px-5 py-4 border-t border-gray-200 gap-2;
+}
+
+.outlinedButton {
+  @apply border border-blue-500 rounded-full p-2 hover:bg-gray-100 w-12 h-12 flex items-center justify-center flex-1 text-gray-500 font-medium;
 }
