@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
 import styles from "../main.module.css";
+import { Button } from "@headlessui/react";
 
 export default function DetailLayout() {
   const query = useSearchParams();
@@ -42,6 +43,21 @@ export default function DetailLayout() {
     );
   };
 
+  const DetailFooter = ({ type }: { type?: string }) => {
+    switch (type) {
+      case "edit":
+        return (
+          <footer className="flex px-5 py-4 border-t border-gray-200">
+            <Button className={styles.bigButton}>Confirm</Button>
+          </footer>
+        );
+      case "save":
+      case "sent":
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <main className="w-full h-full flex flex-col max-w-lg mx-auto">
       <DetailHeader
@@ -49,7 +65,7 @@ export default function DetailLayout() {
         reqId={query.get("reqId") || ""}
       />
       <div className="flex-1">body</div>
-      <footer>footer</footer>
+      <DetailFooter type={query.get("type") || ""} />
     </main>
   );
 }

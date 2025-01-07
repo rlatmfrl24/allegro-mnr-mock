@@ -1,3 +1,11 @@
 .iconButton {
   @apply rounded-full p-2 hover:bg-gray-100;
 }
+
+.bigButton {
+  @apply bg-blue-500 hover:bg-blue-600 rounded-full border-2 border-blue-300 w-full text-white h-12;
+}
+
+.bigButton.disabled {
+  @apply bg-gray-300 text-gray-500;
+}

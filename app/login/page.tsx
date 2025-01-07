@@ -3,6 +3,8 @@
 import Image from "next/image";
 import styles from "./login.module.css";
 import { useRouter } from "next/navigation";
+import { Button } from "@headlessui/react";
+import classNames from "classnames";
 
 export default function Login() {
   const router = useRouter();
@@ -39,12 +41,12 @@ export default function Login() {
           Remember me
         </label>
       </div>
-      <button
-        className="bg-blue-500 rounded-full border border-gray-300 w-full text-white h-12 mt-6"
+      <Button
+        className={classNames(styles.bigButton, "mt-6")}
         onClick={() => router.push("/main")}
       >
         Login
-      </button>
+      </Button>
     </div>
   );
 }
