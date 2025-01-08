@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import NotificationIcon from "@/public/icon_notification.svg";
+import MakeNewDocumentIcon from "@/public/icon_make_new_document.svg";
+import ScanIcon from "@/public/icon_footer_scan.svg";
 
 export default function Main() {
   const router = useRouter();
@@ -18,27 +21,15 @@ export default function Main() {
           className="px-2"
         />
         <button className="rounded-full p-2 hover:bg-gray-100">
-          <Image
-            src="/icon_notification.svg"
-            alt="Next.js logo"
-            width={24}
-            height={24}
-            priority
-          />
+          <NotificationIcon />
         </button>
       </header>
       <div className="flex flex-col flex-1 px-5 py-6">
         <button
           className="text-left flex items-center gap-2 p-4 text-base font-semibold leading-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-          onClick={() => router.push("/main/detail?type=edit")}
+          onClick={() => router.push("/main/detail")}
         >
-          <Image
-            src="/icon_make_new_document.svg"
-            alt="Search"
-            width={24}
-            height={24}
-            priority
-          />
+          <MakeNewDocumentIcon />
           Make New
         </button>
         <div className="flex items-center justify-between my-3">
@@ -54,13 +45,7 @@ export default function Main() {
         <FooterButton icon="/icon_footer_progress.svg" text="Progress" />
         <div className="w-full flex items-center justify-center">
           <button className="flex items-center justify-center p-2 bg-blue-500 hover:bg-blue-600 rounded-full text-white">
-            <Image
-              src="/icon_footer_scan.svg"
-              alt="Scan"
-              width={24}
-              height={24}
-              priority
-            />
+            <ScanIcon />
           </button>
         </div>
         <FooterButton icon="/icon_footer_history.svg" text="History" />

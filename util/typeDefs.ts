@@ -1,6 +1,7 @@
 interface DamageRequestProps extends DamageSummaryProps {
   containerNumber: string;
   vendorShop: string;
+  state: "edit" | "save" | "sent";
 }
 
 interface DamageSummaryProps {
