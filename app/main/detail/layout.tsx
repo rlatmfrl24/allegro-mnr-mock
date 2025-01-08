@@ -6,6 +6,7 @@ import Image from "next/image";
 import styles from "../main.module.css";
 import { Button } from "@headlessui/react";
 import classNames from "classnames";
+import DetailPage from "./page";
 
 export default function DetailLayout() {
   const query = useSearchParams();
@@ -92,10 +93,10 @@ export default function DetailLayout() {
     <main className="w-full h-full flex flex-col max-w-lg mx-auto">
       <DetailHeader
         type={query.get("type") || ""}
-        reqId={query.get("reqId") || ""}
+        reqId={query.get("reqid") || ""}
       />
-      <div className="flex-1">body</div>
-      <DetailFooter type={query.get("type") || ""} />
+      <DetailPage type={query.get("type") || ""} />
+      {/* <DetailFooter type={query.get("type") || ""} /> */}
     </main>
   );
 }

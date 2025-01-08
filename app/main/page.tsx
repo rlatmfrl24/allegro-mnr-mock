@@ -64,7 +64,7 @@ export default function Main() {
           </button>
         </div>
         <FooterButton icon="/icon_footer_history.svg" text="History" />
-        <FooterButton icon="/icon_footer_profile.svg" text="Progress" />
+        <FooterButton icon="/icon_footer_profile.svg" text="Profile" />
       </footer>
     </main>
   );
