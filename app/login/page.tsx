@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import styles from "./login.module.css";
 import { useRouter } from "next/navigation";
 import { Button, Input } from "@headlessui/react";
 import classNames from "classnames";
+import styles from "@/styles/main.module.css";
 
 export default function Login() {
   const router = useRouter();

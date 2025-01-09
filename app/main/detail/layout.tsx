@@ -12,8 +12,7 @@ import ShopIcon from "@/public/icon_shop.svg";
 import TimeIcon from "@/public/icon_time.svg";
 import { useCurrentRequestState } from "@/store/detail.store";
 import { DamageRequestProps } from "@/util/typeDefs";
-
-import styles from "../main.module.css";
+import styles from "@/styles/main.module.css";
 
 export default function DetailLayout({
   children,

@@ -3,7 +3,7 @@
 }
 
 .bigButton {
-  @apply bg-blue-500 hover:bg-blue-600 rounded-full border-2 border-blue-300 text-white h-12 font-medium flex-1 basis-1/2;
+  @apply bg-blue-500 hover:bg-blue-600 rounded-full border-2 border-blue-300 text-white h-12 font-medium;
 }
 
 .bigButton:disabled {
@@ -11,7 +11,7 @@
 }
 
 .outlinedButton {
-  @apply border border-blue-500 rounded-full p-2 hover:bg-gray-100 h-12 flex items-center justify-center text-gray-500 font-medium flex-1 basis-1/2;
+  @apply border border-blue-500 rounded-full p-2 hover:bg-gray-100 h-12 flex items-center justify-center text-gray-500 font-medium;
 }
 
 .detail.footer {

@@ -10,12 +10,14 @@ import {
   Button,
 } from "@headlessui/react";
 import classNames from "classnames";
-import styles from "../../main.module.css";
+import styles from "@/styles/main.module.css";
 import DeleteIcon from "@/public/icon_delete.svg";
 import { SummaryBox } from "../layout";
+import { useRouter } from "next/navigation";
 
 const SaveDetailContainer = () => {
   const currentRequestStore = useCurrentRequestState();
+  const router = useRouter();
 
   return (
     <>
@@ -53,8 +55,22 @@ const SaveDetailContainer = () => {
           <DeleteIcon />
         </Button>
         <div className="flex flex-1 gap-2">
-          <Button className={styles.outlinedButton}>Save</Button>
-          <Button className={styles.bigButton}>Send</Button>
+          <Button
+            className={styles.outlinedButton}
+            onClick={() => {
+              router.push("/main/result/saved");
+            }}
+          >
+            Save
+          </Button>
+          <Button
+            className={styles.bigButton}
+            onClick={() => {
+              router.push("/main/result/sent");
+            }}
+          >
+            Send
+          </Button>
         </div>
       </footer>
     </>

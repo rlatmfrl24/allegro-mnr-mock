@@ -11,9 +11,9 @@ import {
   Legend,
 } from "@headlessui/react";
 
-import styles from "../../main.module.css";
 import { SummaryBox } from "../layout";
 import { useRouter } from "next/navigation";
+import styles from "@/styles/main.module.css";
 
 const EditDetailContainer = () => {
   const currentRequestStore = useCurrentRequestState();
