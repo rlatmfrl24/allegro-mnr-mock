@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ImageUploadPicture from "@/public/image_upload_picture.svg";
 import { useScanImageState, useUploadImageListState } from "@/store/scan.store";
+import CameraIcon from "@/public/icon_camera.svg";
 
 export default function UploadPage() {
   const router = useRouter();
@@ -45,11 +46,15 @@ export default function UploadPage() {
         <div className="w-14"></div>
       </div>
       <Button
-        className={classNames(styles.bigButton, "m-5")}
+        className={classNames(
+          styles.bigButton,
+          "m-5 flex items-center gap-2 justify-center"
+        )}
         onClick={() => {
           router.push("/main/upload/camera");
         }}
       >
+        <CameraIcon />
         Search by camera
       </Button>
       {images.length > 0 && <div>Recent</div>}
@@ -79,7 +84,7 @@ export default function UploadPage() {
           <EmptyImageGrid />
         )}
       </div>
-      <footer className="flex items-center justify-center p-4 border-t border-gray-200">
+      <footer className="flex items-center justify-center px-5 py-4 border-t border-gray-200">
         <input
           type="file"
           accept="image/*"

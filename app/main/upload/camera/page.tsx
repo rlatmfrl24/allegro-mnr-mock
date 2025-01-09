@@ -8,7 +8,7 @@ import { Camera, CameraType } from "react-camera-pro";
 export default function CameraView() {
   const router = useRouter();
   const camera = useRef<CameraType | null>(null);
-  const setScanImage = useScanImageState().setScanImage;
+  const scanImageStore = useScanImageState();
 
   return (
     <div className="h-full flex flex-col bg-black">
@@ -27,7 +27,8 @@ export default function CameraView() {
           onClick={() => {
             const photo = camera.current?.takePhoto();
             if (photo !== undefined) {
-              setScanImage(photo);
+              scanImageStore.setScanImage(photo);
+              scanImageStore.setCreatedAt(new Date());
             }
             router.push("/main/upload/scan");
           }}
