@@ -5,18 +5,17 @@ import styles from "@/styles/main.module.css";
 import BackIcon from "@/public/icon_back.svg";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import ImageUploadPicture from "@/public/image_upload_picture.svg";
+import { useScanImageState, useUploadImageListState } from "@/store/scan.store";
 
 export default function UploadPage() {
   const router = useRouter();
-
-  const [files, setFiles] = useState<FileList | null>(null);
+  const scanImageStore = useScanImageState();
+  const uploadImageListStore = useUploadImageListState();
+  const images = uploadImageListStore.uploadImageList;
 
   const handleUpload = () => {
-    console.log("upload");
-
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -24,18 +23,14 @@ export default function UploadPage() {
     input.onchange = (e: Event) => {
       const target = e.target as HTMLInputElement;
       if (target.files) {
-        setFiles(target.files);
+        uploadImageListStore.setUploadImageList(
+          Array.from(target.files).map((file) => URL.createObjectURL(file))
+        );
       }
     };
 
     input.click();
   };
-
-  useEffect(() => {
-    if (files) {
-      console.log(files);
-    }
-  }, [files]);
 
   return (
     <div className="flex flex-col h-full">
@@ -49,21 +44,30 @@ export default function UploadPage() {
         <h2 className="font-medium">Search with Pic</h2>
         <div className="w-14"></div>
       </div>
-      <Button className={classNames(styles.bigButton, "m-5")}>
+      <Button
+        className={classNames(styles.bigButton, "m-5")}
+        onClick={() => {
+          router.push("/main/upload/camera");
+        }}
+      >
         Search by camera
       </Button>
-      {files && <div>Recent</div>}
+      {images.length > 0 && <div>Recent</div>}
       <div className="flex-1 flex flex-col overflow-auto">
-        {files ? (
+        {images.length > 0 ? (
           <div className="grid grid-cols-4">
-            {Array.from(files).map((file, index) => (
+            {Array.from(images).map((image, index) => (
               <div
                 key={index}
                 className="relative w-full h-24 hover:opacity-80 cursor-pointer"
+                onClick={() => {
+                  scanImageStore.setScanImage(image);
+                  router.push("/main/upload/scan");
+                }}
               >
                 <Image
                   fill
-                  src={URL.createObjectURL(file)}
+                  src={image}
                   alt="image"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   objectFit="cover"
