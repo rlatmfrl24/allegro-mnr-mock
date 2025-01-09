@@ -1,0 +1,48 @@
+.iconButton {
+  @apply rounded-full p-2 hover:bg-gray-100 w-12 h-12 flex items-center justify-center;
+}
+
+.bigButton {
+  @apply bg-blue-500 hover:bg-blue-600 rounded-full border-2 border-blue-300 text-white h-12 font-medium;
+}
+
+.bigButton:disabled {
+  @apply bg-gray-300 text-gray-500 border-gray-300;
+}
+
+.outlinedButton {
+  @apply border border-blue-500 rounded-full p-2 hover:bg-gray-100 h-12 flex items-center justify-center text-gray-500 font-medium;
+}
+
+.detail.footer {
+  @apply flex px-5 py-4 border-t border-gray-200 gap-2;
+}
+
+.input {
+  @apply bg-gray-100 px-4 py-3 w-full rounded-lg;
+}
+
+.field.label {
+  @apply text-gray-500 text-xs block ml-2;
+}
+
+.field.legend {
+  @apply text-gray-500 text-sm font-bold;
+}
+
+.box.shadow {
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+  @apply rounded-lg bg-white;
+}
+
+.summary {
+  @apply grid grid-cols-2 gap-4 p-4 text-xs;
+}
+
+.summary .label {
+  @apply text-blue-500 font-semibold flex gap-2 items-center;
+}
+
+.summary .value {
+  @apply text-gray-800 text-right;
+}
