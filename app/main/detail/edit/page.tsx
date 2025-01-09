@@ -4,6 +4,11 @@ import ImageIcon from "@/public/icon_image.svg";
 import { useCurrentRequestState } from "@/store/detail.store";
 import {
   Button,
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
   Field,
   Fieldset,
   Input,
@@ -14,10 +19,26 @@ import {
 import { SummaryBox } from "../layout";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/main.module.css";
+import { useMemo, useState } from "react";
+import { faker } from "@faker-js/faker";
+import ChevronDownIcon from "@/public/icon_chevron_down.svg";
 
 const EditDetailContainer = () => {
   const currentRequestStore = useCurrentRequestState();
   const router = useRouter();
+  const [vendorQuery, setVendorQuery] = useState("");
+
+  const vendorList = useMemo(() => {
+    return Array.from({ length: 20 }).map(() => faker.company.name());
+  }, []);
+
+  const filteredVendorList = useMemo(() => {
+    return vendorQuery === ""
+      ? vendorList
+      : vendorList.filter((vendor) =>
+          vendor.toLowerCase().includes(vendorQuery.toLowerCase())
+        );
+  }, [vendorList, vendorQuery]);
 
   return (
     <>
@@ -38,11 +59,51 @@ const EditDetailContainer = () => {
               }}
             />
           </Field>
-          <Field>
+          <Field className="relative">
             <Label className={classNames(styles.field, styles.label)}>
               Vendor Shop
             </Label>
-            <Input
+            <Combobox
+              onChange={(value: string) => {
+                currentRequestStore.setCurrent({
+                  ...currentRequestStore.current,
+                  vendorShop: value,
+                });
+              }}
+            >
+              <div className="relative">
+                <ComboboxInput
+                  className={styles.input}
+                  onInput={(e) => {
+                    setVendorQuery(e.currentTarget.value);
+                  }}
+                />
+                <ComboboxButton className="absolute right-0 top-0 bottom-0 flex items-center px-2">
+                  <ChevronDownIcon />
+                </ComboboxButton>
+              </div>
+              <ComboboxOptions
+                anchor="bottom"
+                className="w-[var(--input-width)] bg-white border empty:invisible p-2"
+              >
+                {filteredVendorList.map((vendor) => (
+                  <ComboboxOption
+                    key={vendor}
+                    value={vendor}
+                    className="data-[focus]:bg-blue-100"
+                    onClick={() => {
+                      currentRequestStore.setCurrent({
+                        ...currentRequestStore.current,
+                        vendorShop: vendor,
+                      });
+                    }}
+                  >
+                    {vendor}
+                  </ComboboxOption>
+                ))}
+              </ComboboxOptions>
+            </Combobox>
+            {/* <Input
               className={styles.input}
               defaultValue={currentRequestStore.current.vendorShop}
               onInput={(e) => {
@@ -51,7 +112,7 @@ const EditDetailContainer = () => {
                   vendorShop: e.currentTarget.value,
                 });
               }}
-            />
+            /> */}
           </Field>
           <Legend className={classNames(styles.field, styles.legend)}>
             Images
