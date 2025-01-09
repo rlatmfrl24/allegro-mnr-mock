@@ -27,7 +27,7 @@ export default function Main() {
       <div className="flex flex-col flex-1 px-5 py-6">
         <button
           className="text-left flex items-center gap-2 p-4 text-base font-semibold leading-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-          onClick={() => router.push("/main/detail")}
+          onClick={() => router.push("/main/detail/edit")}
         >
           <MakeNewDocumentIcon />
           Make New
