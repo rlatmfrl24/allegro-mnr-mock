@@ -7,13 +7,18 @@ import MakeNewDocumentIcon from "@/public/icon_make_new_document.svg";
 import ScanIcon from "@/public/icon_footer_scan.svg";
 import { useCurrentRequestState } from "@/store/detail.store";
 import { useEffect } from "react";
+import { Button } from "@headlessui/react";
+import { useScanImageState } from "@/store/scan.store";
 
 export default function Main() {
   const router = useRouter();
   const currentRequestStore = useCurrentRequestState();
+  const scanImageStore = useScanImageState();
 
   useEffect(() => {
+    console.log("reset current request");
     currentRequestStore.resetCurrent();
+    scanImageStore.resetScanImage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,9 +57,12 @@ export default function Main() {
         <FooterButton icon="/icon_footer_lists.svg" text="Lists" />
         <FooterButton icon="/icon_footer_progress.svg" text="Progress" />
         <div className="w-full flex items-center justify-center">
-          <button className="flex items-center justify-center p-2 bg-blue-500 hover:bg-blue-600 rounded-full text-white">
+          <Button
+            className="flex items-center justify-center p-2 bg-blue-500 hover:bg-blue-600 rounded-full text-white"
+            onClick={() => router.push("/main/upload")}
+          >
             <ScanIcon />
-          </button>
+          </Button>
         </div>
         <FooterButton icon="/icon_footer_history.svg" text="History" />
         <FooterButton icon="/icon_footer_profile.svg" text="Profile" />
