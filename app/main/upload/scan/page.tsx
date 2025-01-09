@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BackIcon from "@/public/icon_back.svg";
 import { useCurrentRequestState } from "@/store/detail.store";
+import CameraIcon from "@/public/icon_camera.svg";
 
 export default function ScanResultPage() {
   const currentRequestStore = useCurrentRequestState();
@@ -58,9 +59,10 @@ export default function ScanResultPage() {
           </Button>
           <div className="flex gap-2">
             <Button
-              className={classNames(styles.outlinedButton, "w-32")}
+              className={classNames(styles.outlinedButton, "flex gap-2 w-36")}
               onClick={() => router.push("/main/upload/camera")}
             >
+              <CameraIcon />
               Take again
             </Button>
             <Button
