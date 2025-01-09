@@ -42,10 +42,9 @@ export default function ScanResultPage() {
         <Image
           src={scanImage}
           fill
-          objectFit="cover"
           alt="Scan Image"
           // add black overlay to image
-          className="filter brightness-50"
+          className="filter brightness-50 object-cover"
         />
       )}
       <div className="z-10 bg-white w-full h-fit rounded-t-3xl flex flex-col items-center">
@@ -62,8 +61,7 @@ export default function ScanResultPage() {
                 width={24}
                 height={24}
                 quality={30}
-                className="rounded-full w-10 h-10 border-2 border-blue-500"
-                objectFit="cover"
+                className="rounded-full w-10 h-10 border-2 border-blue-500 object-cover"
                 alt="Back"
               />
             ) : (
