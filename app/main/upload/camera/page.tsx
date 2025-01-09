@@ -1,6 +1,7 @@
 "use client";
 
 import { useScanImageState } from "@/store/scan.store";
+import { Button } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Camera, CameraType } from "react-camera-pro";
@@ -10,6 +11,7 @@ export default function CameraView() {
   const camera = useRef<CameraType | null>(null);
   const scanImageStore = useScanImageState();
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -29,15 +31,22 @@ export default function CameraView() {
     }
   }, []);
 
+  function ToggleFacingMode() {
+    setFacingMode(facingMode === "user" ? "environment" : "user");
+  }
+
   return (
     <div className="h-full flex flex-col bg-black">
       <div className="bg-black text-white p-4 flex justify-between items-center">
         <span>
           {location.latitude}, {location.longitude}
         </span>
+
+        <Button onClick={() => ToggleFacingMode()}>Swap</Button>
       </div>
       <div className="relative w-full h-full">
         <Camera
+          facingMode={facingMode}
           ref={camera}
           errorMessages={{
             noCameraAccessible: "You need to allow camera access",
