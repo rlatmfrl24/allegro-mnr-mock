@@ -2,17 +2,41 @@
 
 import { useScanImageState } from "@/store/scan.store";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Camera, CameraType } from "react-camera-pro";
 
 export default function CameraView() {
   const router = useRouter();
   const camera = useRef<CameraType | null>(null);
   const scanImageStore = useScanImageState();
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
 
   return (
     <div className="h-full flex flex-col bg-black">
-      <div className="relative w-full h-full mt-24">
+      <div className="bg-black text-white p-4 flex justify-between items-center">
+        <span>
+          {location.latitude}, {location.longitude}
+        </span>
+      </div>
+      <div className="relative w-full h-full">
         <Camera
           ref={camera}
           errorMessages={{
@@ -30,7 +54,7 @@ export default function CameraView() {
             if (photo !== undefined) {
               scanImageStore.setScanImage(photo as string);
               scanImageStore.setCreatedAt(new Date());
-              scanImageStore.setLocation(0, 0);
+              scanImageStore.setLocation(location.latitude, location.longitude);
             }
             router.push("/main/upload/scan");
           }}
