@@ -1,7 +1,0 @@
-.input {
-  @apply bg-gray-100 px-4 py-3 w-full rounded-lg;
-}
-
-.bigButton {
-  @apply bg-blue-500 hover:bg-blue-600 rounded-full border-2 border-blue-300 w-full text-white h-12;
-}

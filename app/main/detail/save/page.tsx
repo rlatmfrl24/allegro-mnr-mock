@@ -56,7 +56,7 @@ const SaveDetailContainer = () => {
         </Button>
         <div className="flex flex-1 gap-2">
           <Button
-            className={styles.outlinedButton}
+            className={classNames(styles.outlinedButton, "basis-1/2")}
             onClick={() => {
               router.push("/main/result/saved");
             }}
@@ -64,7 +64,7 @@ const SaveDetailContainer = () => {
             Save
           </Button>
           <Button
-            className={styles.bigButton}
+            className={classNames(styles.bigButton, "basis-1/2")}
             onClick={() => {
               router.push("/main/result/sent");
             }}

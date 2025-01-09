@@ -72,7 +72,7 @@ const EditDetailContainer = () => {
             !currentRequestStore.current.containerNumber ||
             !currentRequestStore.current.vendorShop
           }
-          className={styles.bigButton}
+          className={classNames(styles.bigButton, "flex-1")}
           onClick={() => {
             currentRequestStore.setCurrent({
               ...currentRequestStore.current,

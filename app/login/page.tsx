@@ -51,7 +51,7 @@ export default function Login() {
         </label>
       </div>
       <Button
-        className={classNames(styles.bigButton, "mt-6")}
+        className={classNames(styles.bigButton, "mt-6 w-full")}
         onClick={() => router.push("/main")}
       >
         Login
