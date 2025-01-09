@@ -5,9 +5,17 @@ import { useRouter } from "next/navigation";
 import NotificationIcon from "@/public/icon_notification.svg";
 import MakeNewDocumentIcon from "@/public/icon_make_new_document.svg";
 import ScanIcon from "@/public/icon_footer_scan.svg";
+import { useCurrentRequestState } from "@/store/detail.store";
+import { useEffect } from "react";
 
 export default function Main() {
   const router = useRouter();
+  const currentRequestStore = useCurrentRequestState();
+
+  useEffect(() => {
+    currentRequestStore.resetCurrent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main className="w-full h-full flex flex-col">
