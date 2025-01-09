@@ -9,6 +9,7 @@ import Image from "next/image";
 import ImageUploadPicture from "@/public/image_upload_picture.svg";
 import { useScanImageState, useUploadImageListState } from "@/store/scan.store";
 import CameraIcon from "@/public/icon_camera.svg";
+import exifr from "exifr";
 
 export default function UploadPage() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function UploadPage() {
   const uploadImageListStore = useUploadImageListState();
   const images = uploadImageListStore.uploadImageList;
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -25,12 +26,18 @@ export default function UploadPage() {
       const target = e.target as HTMLInputElement;
       if (target.files) {
         uploadImageListStore.setUploadImageList(
-          Array.from(target.files).map((file) => URL.createObjectURL(file))
+          Array.from(target.files).map((file) => file)
         );
       }
     };
 
     input.click();
+  };
+
+  const getExifDataFromFile = async (file: File) => {
+    const exif = await exifr.parse(file);
+    console.log(exif);
+    return exif;
   };
 
   return (
@@ -65,17 +72,21 @@ export default function UploadPage() {
               <div
                 key={index}
                 className="relative w-full h-24 hover:opacity-80 cursor-pointer"
-                onClick={() => {
-                  scanImageStore.setScanImage(image);
+                onClick={async () => {
+                  const exif = await getExifDataFromFile(image);
+                  scanImageStore.setScanImage(URL.createObjectURL(image));
+                  scanImageStore.setLocation(exif.latitude, exif.longitude);
+
+                  // scanImageStore.setScanImage(image);
                   router.push("/main/upload/scan");
                 }}
               >
                 <Image
                   fill
-                  src={image}
+                  src={URL.createObjectURL(image)}
                   alt="image"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  objectFit="cover"
+                  className="object-cover w-full h-full"
                 />
               </div>
             ))}
@@ -85,18 +96,11 @@ export default function UploadPage() {
         )}
       </div>
       <footer className="flex items-center justify-center px-5 py-4 border-t border-gray-200">
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          multiple
-          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-            console.log(e.target.files);
-          }}
-        />
         <Button
           className={classNames(styles.outlinedButton, "w-full")}
-          onClick={handleUpload}
+          onClick={async () => {
+            await handleUpload();
+          }}
         >
           Upload from library
         </Button>

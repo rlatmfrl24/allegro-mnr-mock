@@ -8,13 +8,17 @@ import ScanIcon from "@/public/icon_footer_scan.svg";
 import { useCurrentRequestState } from "@/store/detail.store";
 import { useEffect } from "react";
 import { Button } from "@headlessui/react";
+import { useScanImageState } from "@/store/scan.store";
 
 export default function Main() {
   const router = useRouter();
   const currentRequestStore = useCurrentRequestState();
+  const scanImageStore = useScanImageState();
 
   useEffect(() => {
+    console.log("reset current request");
     currentRequestStore.resetCurrent();
+    scanImageStore.resetScanImage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

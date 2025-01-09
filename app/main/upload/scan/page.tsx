@@ -10,11 +10,13 @@ import { useEffect, useState } from "react";
 import BackIcon from "@/public/icon_back.svg";
 import { useCurrentRequestState } from "@/store/detail.store";
 import CameraIcon from "@/public/icon_camera.svg";
+import exifr from "exifr";
 
 export default function ScanResultPage() {
   const currentRequestStore = useCurrentRequestState();
   const [containerNumber, setContainerNumber] = useState("");
-  const scanImage = useScanImageState().scanImage;
+  const scanImageStore = useScanImageState();
+  const scanImage = scanImageStore.scanImage;
   const router = useRouter();
 
   useEffect(() => {
@@ -22,6 +24,17 @@ export default function ScanResultPage() {
       router.push("/main/upload/camera");
     }
   }, [router, scanImage]);
+
+  // get location from image
+  const getLocationFromImage = async () => {
+    if (!scanImage) {
+      return;
+    }
+
+    console.log(scanImage);
+    const exif = await exifr.parse(scanImage);
+    console.log(exif);
+  };
 
   return (
     <div className="relative flex flex-col items-center justify-end h-full">
@@ -68,10 +81,15 @@ export default function ScanResultPage() {
             <Button
               disabled={!containerNumber}
               className={classNames(styles.bigButton, "w-24")}
-              onClick={() => {
+              onClick={async () => {
+                await getLocationFromImage();
                 currentRequestStore.setCurrent({
                   ...currentRequestStore.current,
                   containerNumber: containerNumber,
+                  location: {
+                    latitude: scanImageStore.location.latitude || 0,
+                    longitude: scanImageStore.location.longitude || 0,
+                  },
                 });
                 router.push("/main/detail/edit");
               }}

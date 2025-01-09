@@ -26,9 +26,11 @@ export default function CameraView() {
         <button
           onClick={() => {
             const photo = camera.current?.takePhoto();
+
             if (photo !== undefined) {
-              scanImageStore.setScanImage(photo);
+              scanImageStore.setScanImage(photo as string);
               scanImageStore.setCreatedAt(new Date());
+              scanImageStore.setLocation(0, 0);
             }
             router.push("/main/upload/scan");
           }}

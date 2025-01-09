@@ -1,21 +1,21 @@
 import { create } from "zustand";
 
 interface ScanImageState {
-  scanImage: string | ImageData | null;
+  scanImage: string | null;
   createdAt: Date | null;
   location: {
     latitude: number | null;
     longitude: number | null;
   };
-  setScanImage: (image: string | ImageData) => void;
+  setScanImage: (image: string) => void;
   setLocation: (latitude: number, longitude: number) => void;
   setCreatedAt: (date: Date) => void;
   resetScanImage: () => void;
 }
 
 interface UploadImageListState {
-  uploadImageList: string[];
-  setUploadImageList: (imageList: string[]) => void;
+  uploadImageList: File[];
+  setUploadImageList: (imageList: File[]) => void;
   resetUploadImageList: () => void;
 }
 
