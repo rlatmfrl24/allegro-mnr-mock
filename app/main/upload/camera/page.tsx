@@ -22,7 +22,7 @@ export default function CameraView() {
           }}
         />
       </div>
-      <div className="flex justify-center bg-black h-24">
+      <div className="flex items-center justify-center bg-black h-24">
         <button
           onClick={() => {
             const photo = camera.current?.takePhoto();
@@ -32,6 +32,7 @@ export default function CameraView() {
             }
             router.push("/main/upload/scan");
           }}
+          className="w-fit h-fit filter hover:brightness-75"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,13 +44,6 @@ export default function CameraView() {
             <circle cx="12" cy="12" r="11" fill="white" />
             <circle cx="12" cy="12" r="10" fill="black" />
             <circle cx="12" cy="12" r="7" fill="white" />
-            <circle
-              cx="12"
-              cy="12"
-              r="11.8"
-              fill="black"
-              className="opacity-0 hover:opacity-40"
-            />
           </svg>
         </button>
       </div>
