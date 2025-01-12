@@ -11,7 +11,6 @@ export default function CameraView() {
   const camera = useRef<CameraType | null>(null);
   const scanImageStore = useScanImageState();
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
-  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -32,7 +31,7 @@ export default function CameraView() {
   }, []);
 
   function ToggleFacingMode() {
-    setFacingMode(facingMode === "user" ? "environment" : "user");
+    camera.current?.switchCamera();
   }
 
   return (
@@ -46,7 +45,6 @@ export default function CameraView() {
       </div>
       <div className="relative w-full h-full">
         <Camera
-          facingMode={facingMode}
           ref={camera}
           errorMessages={{
             noCameraAccessible: "You need to allow camera access",
