@@ -44,14 +44,12 @@ export async function POST(request: NextRequest) {
       if (error) {
         console.error(error);
       } else {
-        console.log(data);
+        image_array.push(data.fullPath);
       }
-
-      image_array.push(`public/${file.name}`);
     })
   );
 
-  const { data, error } = await client.from("damage_requests").insert([
+  const { error } = await client.from("damage_requests").insert([
     {
       container_number: body.containerNumber,
       vendor_shop: body.vendorShop,
@@ -66,8 +64,6 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     console.error(error);
-  } else {
-    console.log(data);
   }
 
   return new Response("Hello world!", { status: 200 });
