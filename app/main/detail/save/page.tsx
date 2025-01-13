@@ -23,7 +23,12 @@ const SaveDetailContainer = () => {
   const router = useRouter();
   const [isImageListOpen, setIsImageListOpen] = useState(true);
 
-  async function handleSave() {
+  async function handleSave(type: "save" | "sent") {
+    currentRequestStore.setCurrent({
+      ...currentRequestStore.current,
+      state: type,
+    });
+
     const response = await fetch("/api/request", {
       method: "POST",
       body: JSON.stringify(currentRequestStore.current),
@@ -108,15 +113,16 @@ const SaveDetailContainer = () => {
           <Button
             className={classNames(styles.outlinedButton, "basis-1/2")}
             onClick={async () => {
-              await handleSave();
-              // router.push("/main/result/saved");
+              await handleSave("save");
+              router.push("/main/result/saved");
             }}
           >
             Save
           </Button>
           <Button
             className={classNames(styles.bigButton, "basis-1/2")}
-            onClick={() => {
+            onClick={async () => {
+              await handleSave("sent");
               router.push("/main/result/sent");
             }}
           >

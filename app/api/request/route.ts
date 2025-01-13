@@ -49,22 +49,25 @@ export async function POST(request: NextRequest) {
     })
   );
 
-  const { error } = await client.from("damage_requests").insert([
-    {
-      container_number: body.containerNumber,
-      vendor_shop: body.vendorShop,
-      state: "pending",
-      created_at: body.createdAt,
-      longitude: body.location.longitude,
-      latitude: body.location.latitude,
-      estimated_period: null,
-      images: image_array,
-    },
-  ]);
+  const { data, error } = await client
+    .from("damage_requests")
+    .insert([
+      {
+        container_number: body.containerNumber,
+        vendor_shop: body.vendorShop,
+        state: "pending",
+        created_at: body.createdAt,
+        longitude: body.location.longitude,
+        latitude: body.location.latitude,
+        estimated_period: null,
+        images: image_array,
+      },
+    ])
+    .select();
 
   if (error) {
-    console.error(error);
+    return new Response("Failed to save request", { status: 500 });
+  } else {
+    return new Response(JSON.stringify(data), { status: 200 });
   }
-
-  return new Response("Hello world!", { status: 200 });
 }
