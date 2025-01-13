@@ -23,6 +23,24 @@ const SaveDetailContainer = () => {
   const router = useRouter();
   const [isImageListOpen, setIsImageListOpen] = useState(true);
 
+  async function handleSave(type: "save" | "sent") {
+    currentRequestStore.setCurrent({
+      ...currentRequestStore.current,
+      state: type,
+    });
+
+    const response = await fetch("/api/request", {
+      method: "POST",
+      body: JSON.stringify(currentRequestStore.current),
+    });
+
+    if (response.ok) {
+      console.log("Request saved");
+    } else {
+      console.error("Failed to save request");
+    }
+  }
+
   return (
     <>
       {currentRequestStore.current.state === "sent" && (
@@ -85,25 +103,6 @@ const SaveDetailContainer = () => {
               ))}
             </div>
           )}
-          {/* <div className="grid grid-cols-2 gap-2">
-            {currentRequestStore.current.images.map((image, index) => (
-              <div key={index} className="w-full flex flex-col gap-1">
-                {image.src && (
-                  <div className="w-full h-52 relative">
-                    <Image
-                      src={image.src}
-                      alt={`Image ${index + 1}`}
-                      layout="fill"
-                      className="object-cover rounded-lg"
-                    />
-                  </div>
-                )}
-                <span className="text-base font-semibold">{`Image ${
-                  index + 1
-                }`}</span>
-              </div>
-            ))}
-          </div> */}
         </Fieldset>
       </div>
       <footer className={classNames(styles.detail, styles.footer)}>
@@ -113,7 +112,8 @@ const SaveDetailContainer = () => {
         <div className="flex flex-1 gap-2">
           <Button
             className={classNames(styles.outlinedButton, "basis-1/2")}
-            onClick={() => {
+            onClick={async () => {
+              await handleSave("save");
               router.push("/main/result/saved");
             }}
           >
@@ -121,7 +121,8 @@ const SaveDetailContainer = () => {
           </Button>
           <Button
             className={classNames(styles.bigButton, "basis-1/2")}
-            onClick={() => {
+            onClick={async () => {
+              await handleSave("sent");
               router.push("/main/result/sent");
             }}
           >

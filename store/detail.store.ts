@@ -1,7 +1,7 @@
 import { DamageRequestProps } from "@/util/typeDefs";
 import { create } from "zustand";
 
-interface CurrentRequestState {
+export interface CurrentRequestState {
   current: DamageRequestProps;
   setCurrent: (request: DamageRequestProps) => void;
   resetCurrent: () => void;
