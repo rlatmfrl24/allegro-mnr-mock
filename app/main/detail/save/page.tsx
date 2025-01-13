@@ -85,25 +85,6 @@ const SaveDetailContainer = () => {
               ))}
             </div>
           )}
-          {/* <div className="grid grid-cols-2 gap-2">
-            {currentRequestStore.current.images.map((image, index) => (
-              <div key={index} className="w-full flex flex-col gap-1">
-                {image.src && (
-                  <div className="w-full h-52 relative">
-                    <Image
-                      src={image.src}
-                      alt={`Image ${index + 1}`}
-                      layout="fill"
-                      className="object-cover rounded-lg"
-                    />
-                  </div>
-                )}
-                <span className="text-base font-semibold">{`Image ${
-                  index + 1
-                }`}</span>
-              </div>
-            ))}
-          </div> */}
         </Fieldset>
       </div>
       <footer className={classNames(styles.detail, styles.footer)}>

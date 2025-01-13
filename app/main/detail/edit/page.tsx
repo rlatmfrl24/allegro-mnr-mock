@@ -1,7 +1,11 @@
 "use client";
+
 import classNames from "classnames";
 import ImageIcon from "@/public/icon_image.svg";
-import { useCurrentRequestState } from "@/store/detail.store";
+import {
+  CurrentRequestState,
+  useCurrentRequestState,
+} from "@/store/detail.store";
 import {
   Button,
   Combobox,
@@ -27,6 +31,15 @@ import Image from "next/image";
 import DeleteIcon from "@/public/icon_delete.svg";
 import { format } from "date-fns";
 
+function getBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+}
+
 const EditDetailContainer = () => {
   const currentRequestStore = useCurrentRequestState();
   const router = useRouter();
@@ -43,15 +56,6 @@ const EditDetailContainer = () => {
           vendor.toLowerCase().includes(vendorQuery.toLowerCase())
         );
   }, [vendorList, vendorQuery]);
-
-  function getBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  }
 
   const captureDamageImage = async () => {
     const input = document.createElement("input");
@@ -81,49 +85,6 @@ const EditDetailContainer = () => {
     };
 
     input.click();
-  };
-
-  const DamageImageCard = ({
-    image,
-    index,
-  }: {
-    image: DamageRequestImageProps;
-    index: number;
-  }) => {
-    return (
-      <div className="flex items-center gap-3 p-2 bg-white rounded-xl shadow-md">
-        {image.src && (
-          <Image
-            src={image.src}
-            alt="image"
-            width="48"
-            height="48"
-            className="object-cover w-12 h-12 rounded-lg"
-          />
-        )}
-        <div className="flex-1 flex flex-col gap-1">
-          <span className="text-base font-semibold">{`Image ${
-            index + 1
-          }`}</span>
-          <span className="text-xs text-gray-500">
-            {format(image.createdAt, "dd-MM-yyyy | HH:mm:ss")}
-          </span>
-        </div>
-        <Button
-          className={styles.iconButton}
-          onClick={() => {
-            currentRequestStore.setCurrent({
-              ...currentRequestStore.current,
-              images: currentRequestStore.current.images.filter(
-                (_, i) => i !== index
-              ),
-            });
-          }}
-        >
-          <DeleteIcon />
-        </Button>
-      </div>
-    );
   };
 
   return (
@@ -201,7 +162,12 @@ const EditDetailContainer = () => {
             Add New Image
           </Button>
           {currentRequestStore.current.images.map((image, index) => (
-            <DamageImageCard key={index} image={image} index={index} />
+            <DamageImageCard
+              key={index}
+              image={image}
+              index={index}
+              store={currentRequestStore}
+            />
           ))}
 
           <Legend className={classNames(styles.field, styles.legend)}>
@@ -229,6 +195,47 @@ const EditDetailContainer = () => {
         </Button>
       </footer>
     </>
+  );
+};
+
+const DamageImageCard = ({
+  image,
+  index,
+  store,
+}: {
+  image: DamageRequestImageProps;
+  index: number;
+  store: CurrentRequestState;
+}) => {
+  return (
+    <div className="flex items-center gap-3 p-2 bg-white rounded-xl shadow-md">
+      {image.src && (
+        <Image
+          src={image.src}
+          alt="image"
+          width="48"
+          height="48"
+          className="object-cover w-12 h-12 rounded-lg"
+        />
+      )}
+      <div className="flex-1 flex flex-col gap-1">
+        <span className="text-base font-semibold">{`Image ${index + 1}`}</span>
+        <span className="text-xs text-gray-500">
+          {format(image.createdAt, "dd-MM-yyyy | HH:mm:ss")}
+        </span>
+      </div>
+      <Button
+        className={styles.iconButton}
+        onClick={() => {
+          store.setCurrent({
+            ...store.current,
+            images: store.current.images.filter((_, i) => i !== index),
+          });
+        }}
+      >
+        <DeleteIcon />
+      </Button>
+    </div>
   );
 };
 
