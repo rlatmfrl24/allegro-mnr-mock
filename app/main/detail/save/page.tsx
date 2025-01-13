@@ -23,6 +23,19 @@ const SaveDetailContainer = () => {
   const router = useRouter();
   const [isImageListOpen, setIsImageListOpen] = useState(true);
 
+  async function handleSave() {
+    const response = await fetch("/api/request", {
+      method: "POST",
+      body: JSON.stringify(currentRequestStore.current),
+    });
+
+    if (response.ok) {
+      console.log("Request saved");
+    } else {
+      console.error("Failed to save request");
+    }
+  }
+
   return (
     <>
       {currentRequestStore.current.state === "sent" && (
@@ -94,8 +107,9 @@ const SaveDetailContainer = () => {
         <div className="flex flex-1 gap-2">
           <Button
             className={classNames(styles.outlinedButton, "basis-1/2")}
-            onClick={() => {
-              router.push("/main/result/saved");
+            onClick={async () => {
+              await handleSave();
+              // router.push("/main/result/saved");
             }}
           >
             Save
