@@ -20,7 +20,15 @@ function base64toFile(base64: string, filename: string) {
 
 export async function GET(request: NextRequest) {
   console.log(request.body);
-  return new Response("Hello world!", { status: 200 });
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("damage_requests").select();
+
+  if (error) {
+    return new Response("Failed to fetch data", { status: 500 });
+  } else {
+    return new Response(JSON.stringify(data), { status: 200 });
+  }
 }
 
 export async function POST(request: NextRequest) {

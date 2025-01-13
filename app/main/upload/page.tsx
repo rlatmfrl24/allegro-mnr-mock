@@ -21,6 +21,7 @@ export default function UploadPage() {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
+    input.capture = "environment";
     input.multiple = true;
     input.onchange = (e: Event) => {
       const target = e.target as HTMLInputElement;
@@ -75,7 +76,10 @@ export default function UploadPage() {
                 onClick={async () => {
                   const exif = await getExifDataFromFile(image);
                   scanImageStore.setScanImage(URL.createObjectURL(image));
-                  scanImageStore.setLocation(exif.latitude, exif.longitude);
+
+                  if (exif && exif.latitude && exif.longitude) {
+                    scanImageStore.setLocation(exif.latitude, exif.longitude);
+                  }
 
                   // scanImageStore.setScanImage(image);
                   router.push("/main/upload/scan");
