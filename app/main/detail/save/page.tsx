@@ -14,10 +14,14 @@ import styles from "@/styles/main.module.css";
 import DeleteIcon from "@/public/icon_delete.svg";
 import { SummaryBox } from "../layout";
 import { useRouter } from "next/navigation";
+import ChevronDownIcon from "@/public/icon_chevron_down.svg";
+import { useState } from "react";
+import Image from "next/image";
 
 const SaveDetailContainer = () => {
   const currentRequestStore = useCurrentRequestState();
   const router = useRouter();
+  const [isImageListOpen, setIsImageListOpen] = useState(true);
 
   return (
     <>
@@ -45,9 +49,61 @@ const SaveDetailContainer = () => {
             Summary
           </Legend>
           <SummaryBox data={currentRequestStore.current} />
-          <Legend className={classNames(styles.field, styles.legend)}>
-            Images
-          </Legend>
+          <div className="flex items-center justify-between">
+            <Legend className={classNames(styles.field, styles.legend)}>
+              Images
+            </Legend>
+            <Button
+              className={`w-4 h-4 ${
+                isImageListOpen
+                  ? "transform transition-transform duration-300 ease-in-out"
+                  : "rotate-180 transition-transform duration-300 ease-in-out"
+              }`}
+              onClick={() => setIsImageListOpen(!isImageListOpen)}
+            >
+              <ChevronDownIcon />
+            </Button>
+          </div>
+          {isImageListOpen && (
+            <div className="grid grid-cols-2 gap-2">
+              {currentRequestStore.current.images.map((image, index) => (
+                <div key={index} className="w-full flex flex-col gap-1">
+                  {image.src && (
+                    <div className="w-full h-52 relative">
+                      <Image
+                        src={image.src}
+                        alt={`Image ${index + 1}`}
+                        layout="fill"
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
+                  )}
+                  <span className="text-base font-semibold">{`Image ${
+                    index + 1
+                  }`}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {/* <div className="grid grid-cols-2 gap-2">
+            {currentRequestStore.current.images.map((image, index) => (
+              <div key={index} className="w-full flex flex-col gap-1">
+                {image.src && (
+                  <div className="w-full h-52 relative">
+                    <Image
+                      src={image.src}
+                      alt={`Image ${index + 1}`}
+                      layout="fill"
+                      className="object-cover rounded-lg"
+                    />
+                  </div>
+                )}
+                <span className="text-base font-semibold">{`Image ${
+                  index + 1
+                }`}</span>
+              </div>
+            ))}
+          </div> */}
         </Fieldset>
       </div>
       <footer className={classNames(styles.detail, styles.footer)}>

@@ -54,7 +54,7 @@ export default function CameraView() {
         />
       </div>
       <div className="flex items-center justify-center bg-black h-24">
-        <button
+        <Button
           onClick={() => {
             const photo = camera.current?.takePhoto();
 
@@ -78,7 +78,7 @@ export default function CameraView() {
             <circle cx="12" cy="12" r="10" fill="black" />
             <circle cx="12" cy="12" r="7" fill="white" />
           </svg>
-        </button>
+        </Button>
       </div>
     </div>
   );
