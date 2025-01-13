@@ -107,7 +107,7 @@ export default function Main() {
           <MakeNewDocumentIcon />
           Make New
         </button>
-        <div className="flex items-center justify-between my-3 mx-3">
+        <div className="flex items-center justify-between my-3 mx-5">
           <p className="text-sm font-bold">Recent Lists</p>
           <button className="text-xs">See All</button>
         </div>
